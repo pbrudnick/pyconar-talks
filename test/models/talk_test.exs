@@ -3,7 +3,7 @@ defmodule PyconarTalks.TalkTest do
 
   alias PyconarTalks.Talk
 
-  @valid_attrs %{description: "some content", disabled: true, name: "some content", votes: 42}
+  @valid_attrs %{description: "some content", disabled: true, name: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

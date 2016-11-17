@@ -31,6 +31,7 @@ defmodule PyconarTalks.Router do
     pipe_through [:api]
 
     resources "/talks", TalkController
-    post "talks/vote/:talk_id", TalkController, :vote
+    # post "/talks/vote/:talk_id", TalkController, :vote
+    resources "/scores", ScoreController
   end
 end

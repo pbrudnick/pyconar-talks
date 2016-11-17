@@ -2,7 +2,7 @@ defmodule PyconarTalks.TalkControllerTest do
   use PyconarTalks.ConnCase
 
   alias PyconarTalks.Talk
-  @valid_attrs %{description: "some content", disabled: true, name: "some content", votes: 42}
+  @valid_attrs %{description: "some content", tags: "elixir", conf_key: 23, room: "Main", author: "Lambir", start: "11:00AM", disabled: true, name: "some content"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -20,7 +20,11 @@ defmodule PyconarTalks.TalkControllerTest do
     assert json_response(conn, 200)["data"] == %{"id" => talk.id,
       "name" => talk.name,
       "description" => talk.description,
-      "votes" => talk.votes,
+      "tags" => talk.tags,
+      "conf_key" => talk.conf_key,
+      "room" => talk.room,
+      "author" => talk.author,
+      "start" => talk.start,
       "disabled" => talk.disabled}
   end
 
@@ -52,18 +56,6 @@ defmodule PyconarTalks.TalkControllerTest do
     talk = Repo.insert! %Talk{}
     conn = put conn, talk_path(conn, :update, talk), talk: @invalid_attrs
     assert json_response(conn, 422)["errors"] != %{}
-  end
-
-  test "votes to a talk", %{conn: conn} do
-    talk = Repo.insert! %Talk{votes: 0}
-    conn = post conn, talk_path(conn, :vote, talk)
-    assert json_response(conn, 200)["data"]["votes"] == 1
-  end
-
-  test "votes to a talk with 1 vote", %{conn: conn} do
-    talk = Repo.insert! %Talk{votes: 1}
-    conn = post conn, talk_path(conn, :vote, talk)
-    assert json_response(conn, 200)["data"]["votes"] == 2
   end
 
   test "deletes chosen resource", %{conn: conn} do

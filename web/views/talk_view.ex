@@ -13,7 +13,11 @@ defmodule PyconarTalks.TalkView do
     %{id: talk.id,
       name: talk.name,
       description: talk.description,
-      votes: talk.votes,
+      tags: talk.tags,
+      conf_key: talk.conf_key,
+      room: talk.room,
+      author: talk.author,
+      start: talk.start,
       disabled: talk.disabled}
   end
 end

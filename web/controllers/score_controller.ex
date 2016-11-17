@@ -1,22 +1,22 @@
-defmodule PyconarTalks.TalkController do
+defmodule PyconarTalks.ScoreController do
   use PyconarTalks.Web, :controller
 
-  alias PyconarTalks.Talk
+  alias PyconarTalks.Score
 
   def index(conn, _params) do
-    talks = Repo.all(Talk)
-    render(conn, "index.json", talks: talks)
+    scores = Repo.all(Score)
+    render(conn, "index.json", scores: scores)
   end
 
-  def create(conn, %{"talk" => talk_params}) do
-    changeset = Talk.changeset(%Talk{}, talk_params)
+  def create(conn, %{"score" => score_params}) do
+    changeset = Score.changeset(%Score{}, score_params)
 
     case Repo.insert(changeset) do
-      {:ok, talk} ->
+      {:ok, score} ->
         conn
         |> put_status(:created)
-        |> put_resp_header("location", talk_path(conn, :show, talk))
-        |> render("show.json", talk: talk)
+        |> put_resp_header("location", score_path(conn, :show, score))
+        |> render("show.json", score: score)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -25,17 +25,17 @@ defmodule PyconarTalks.TalkController do
   end
 
   def show(conn, %{"id" => id}) do
-    talk = Repo.get!(Talk, id)
-    render(conn, "show.json", talk: talk)
+    score = Repo.get!(Score, id)
+    render(conn, "show.json", score: score)
   end
 
-  def update(conn, %{"id" => id, "talk" => talk_params}) do
-    talk = Repo.get!(Talk, id)
-    changeset = Talk.changeset(talk, talk_params)
+  def update(conn, %{"id" => id, "score" => score_params}) do
+    score = Repo.get!(Score, id)
+    changeset = Score.changeset(score, score_params)
 
     case Repo.update(changeset) do
-      {:ok, talk} ->
-        render(conn, "show.json", talk: talk)
+      {:ok, score} ->
+        render(conn, "show.json", score: score)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -44,11 +44,11 @@ defmodule PyconarTalks.TalkController do
   end
 
   def delete(conn, %{"id" => id}) do
-    talk = Repo.get!(Talk, id)
+    score = Repo.get!(Score, id)
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
-    Repo.delete!(talk)
+    Repo.delete!(score)
 
     send_resp(conn, :no_content, "")
   end

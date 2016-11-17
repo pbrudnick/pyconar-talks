@@ -6,7 +6,11 @@ defmodule PyconarTalks.Talk do
   schema "talks" do
     field :name, :string
     field :description, :string
-    field :votes, :integer
+    field :tags, :string
+    field :conf_key, :integer
+    field :room, :string
+    field :author, :string
+    field :start, :string
     field :disabled, :boolean, default: false
 
     timestamps()
@@ -17,13 +21,8 @@ defmodule PyconarTalks.Talk do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :description, :votes, :disabled])
-    |> validate_required([:name, :description, :votes, :disabled])
+    |> cast(params, [:name, :description, :tags, :conf_key, :room, :author, :start, :disabled])
+    |> validate_required([:name, :description, :disabled])
   end
 
-  def vote!(talk) do
-    talk
-    |> cast(%{votes: talk.votes+1}, ~w(votes)a)
-    |> Repo.update
-  end
 end
