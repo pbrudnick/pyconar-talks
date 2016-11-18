@@ -30,8 +30,12 @@ defmodule PyconarTalks.Router do
   scope "/api", PyconarTalks do
     pipe_through [:api]
 
-    resources "/talks", TalkController
+    resources "/talks", TalkController, except: [:delete, :update]
     # post "/talks/vote/:talk_id", TalkController, :vote
-    resources "/scores", ScoreController
+    get "/scores", ScoreController, :index
+    get "/scores/talks", ScoreController, :talks_by_score
+    get "/scores/:id", ScoreController, :show
+    post "/scores", ScoreController, :create
+    #resources "/scores", ScoreController, except: [:delete, :update]
   end
 end

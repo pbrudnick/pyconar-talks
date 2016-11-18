@@ -19,4 +19,13 @@ defmodule PyconarTalks.Score do
     |> validate_inclusion(:score, 1..5)
     |> unique_constraint(:talk_id_user_id, name: "scores_user_id_talk_id_index")
   end
+
+  def group_talks_and_sum_scores(query) do
+    from s in query,
+    join: t in assoc(s, :talk),
+    where: t.id == s.talk_id, 
+    group_by: [s.talk_id, t.name, t.author],
+    select: %{name: t.name, author: t.author, total: sum(s.score)},
+    order_by: sum(s.score)
+  end
 end

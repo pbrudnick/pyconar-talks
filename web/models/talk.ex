@@ -25,4 +25,9 @@ defmodule PyconarTalks.Talk do
     |> validate_required([:name, :description, :disabled])
   end
 
+  def enabled(query) do
+    from t in query,
+    where: t.disabled == false
+  end
+
 end

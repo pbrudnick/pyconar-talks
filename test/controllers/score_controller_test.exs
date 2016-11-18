@@ -42,6 +42,7 @@ defmodule PyconarTalks.ScoreControllerTest do
     assert json_response(conn, 422)["errors"] != %{}
   end
 
+  @tag :skip
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
     talk = Repo.insert! %Talk{description: "some content", tags: "elixir", conf_key: 23, room: "Main", author: "Koy", start: "12:00AM", disabled: true, name: "some content"}
     score = Repo.insert! %Score{score: 3, user_id: "android", talk_id: talk.id}
@@ -50,16 +51,23 @@ defmodule PyconarTalks.ScoreControllerTest do
     assert Repo.get_by(Score, @valid_attrs)
   end
 
+  @tag :skip
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
     score = Repo.insert! %Score{}
     conn = put conn, score_path(conn, :update, score), score: @invalid_attrs
     assert json_response(conn, 422)["errors"] != %{}
   end
 
+  @tag :skip
   test "deletes chosen resource", %{conn: conn} do
     score = Repo.insert! %Score{}
     conn = delete conn, score_path(conn, :delete, score)
     assert response(conn, 204)
     refute Repo.get(Score, score.id)
+  end
+
+  test "lists all the talks by score", %{conn: conn} do
+    conn = get conn, score_path(conn, :talks_by_score)
+    assert json_response(conn, 200)["data"] == []
   end
 end

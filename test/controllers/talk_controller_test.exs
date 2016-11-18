@@ -45,6 +45,7 @@ defmodule PyconarTalks.TalkControllerTest do
     assert json_response(conn, 422)["errors"] != %{}
   end
 
+  @tag :skip
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
     talk = Repo.insert! %Talk{}
     conn = put conn, talk_path(conn, :update, talk), talk: @valid_attrs
@@ -52,12 +53,14 @@ defmodule PyconarTalks.TalkControllerTest do
     assert Repo.get_by(Talk, @valid_attrs)
   end
 
+  @tag :skip
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
     talk = Repo.insert! %Talk{}
     conn = put conn, talk_path(conn, :update, talk), talk: @invalid_attrs
     assert json_response(conn, 422)["errors"] != %{}
   end
 
+  @tag :skip
   test "deletes chosen resource", %{conn: conn} do
     talk = Repo.insert! %Talk{}
     conn = delete conn, talk_path(conn, :delete, talk)
