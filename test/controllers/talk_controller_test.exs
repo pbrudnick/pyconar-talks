@@ -11,13 +11,13 @@ defmodule PyconarTalks.TalkControllerTest do
 
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, talk_path(conn, :index)
-    assert json_response(conn, 200)["data"] == []
+    assert json_response(conn, 200)["talks"] == []
   end
 
   test "shows chosen resource", %{conn: conn} do
     talk = Repo.insert! %Talk{}
     conn = get conn, talk_path(conn, :show, talk)
-    assert json_response(conn, 200)["data"] == %{"id" => talk.id,
+    assert json_response(conn, 200)["talk"] == %{"id" => talk.id,
       "name" => talk.name,
       "description" => talk.description,
       "tags" => talk.tags,
@@ -36,7 +36,7 @@ defmodule PyconarTalks.TalkControllerTest do
 
   test "creates and renders resource when data is valid", %{conn: conn} do
     conn = post conn, talk_path(conn, :create), talk: @valid_attrs
-    assert json_response(conn, 201)["data"]["id"]
+    assert json_response(conn, 201)["talk"]["id"]
     #assert Repo.get_by(Talk, @valid_attrs)
   end
 
@@ -49,7 +49,7 @@ defmodule PyconarTalks.TalkControllerTest do
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
     talk = Repo.insert! %Talk{}
     conn = put conn, talk_path(conn, :update, talk), talk: @valid_attrs
-    assert json_response(conn, 200)["data"]["id"]
+    assert json_response(conn, 200)["talk"]["id"]
     assert Repo.get_by(Talk, @valid_attrs)
   end
 

@@ -2,7 +2,6 @@ defmodule PyconarTalks.ScoreController do
   use PyconarTalks.Web, :controller
 
   alias PyconarTalks.Score
-  alias PyconarTalks.Talk
 
   def index(conn, _params) do
     scores = Repo.all(Score)
@@ -10,7 +9,6 @@ defmodule PyconarTalks.ScoreController do
   end
 
   def talks_by_score(conn, params) do
-    # scores = Repo.all(Score)
     scores = Score  
       |> Score.group_talks_and_sum_scores
       |> Repo.all

@@ -1,8 +1,6 @@
 defmodule PyconarTalks.Talk do
   use PyconarTalks.Web, :model
 
-  alias PyconarTalks.Repo
-
   schema "talks" do
     field :name, :string
     field :description, :string

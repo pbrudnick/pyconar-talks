@@ -38,7 +38,6 @@ defmodule PyconarTalks.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:comeonin, "~> 2.6"},
-     {:guardian, "~> 0.13.0"},
      {:cowboy, "~> 1.0"}]
   end
 

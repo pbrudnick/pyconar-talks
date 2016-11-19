@@ -12,13 +12,13 @@ defmodule PyconarTalks.ScoreControllerTest do
 
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, score_path(conn, :index)
-    assert json_response(conn, 200)["data"] == []
+    assert json_response(conn, 200)["scores"] == []
   end
 
   test "shows chosen resource", %{conn: conn} do
     score = Repo.insert! %Score{}
     conn = get conn, score_path(conn, :show, score)
-    assert json_response(conn, 200)["data"] == %{"id" => score.id,
+    assert json_response(conn, 200)["score"] == %{"id" => score.id,
       "user_id" => score.user_id,
       "talk_id" => score.talk_id,
       "score" => score.score}
@@ -33,7 +33,7 @@ defmodule PyconarTalks.ScoreControllerTest do
   test "creates and renders resource when data is valid", %{conn: conn} do
     talk = Repo.insert! %Talk{description: "some content", tags: "elixir", conf_key: 23, room: "Main", author: "Joe", start: "11:00AM", disabled: true, name: "some content"}
     conn = post conn, score_path(conn, :create), score: %{score: 5, user_id: "android", talk_id: talk.id}
-    assert json_response(conn, 201)["data"]["id"]
+    assert json_response(conn, 201)["score"]["id"]
     assert Repo.get_by(Score, @valid_attrs)
   end
   
@@ -47,7 +47,7 @@ defmodule PyconarTalks.ScoreControllerTest do
     talk = Repo.insert! %Talk{description: "some content", tags: "elixir", conf_key: 23, room: "Main", author: "Koy", start: "12:00AM", disabled: true, name: "some content"}
     score = Repo.insert! %Score{score: 3, user_id: "android", talk_id: talk.id}
     conn = put conn, score_path(conn, :update, score), score: @valid_attrs
-    assert json_response(conn, 200)["data"]["id"]
+    assert json_response(conn, 200)["score"]["id"]
     assert Repo.get_by(Score, @valid_attrs)
   end
 
@@ -68,6 +68,6 @@ defmodule PyconarTalks.ScoreControllerTest do
 
   test "lists all the talks by score", %{conn: conn} do
     conn = get conn, score_path(conn, :talks_by_score)
-    assert json_response(conn, 200)["data"] == []
+    assert json_response(conn, 200)["scores"] == []
   end
 end
