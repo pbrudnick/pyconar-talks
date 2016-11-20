@@ -13,7 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :pyconar_talks, PyconarTalks.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
+  url: [host: "https://pyconar-talks.fiqus.com", port: 30734],
   cache_static_manifest: "priv/static/manifest.json",
   server: true,
   version: Mix.Project.config[:version]
