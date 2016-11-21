@@ -34,6 +34,13 @@ defmodule PyconarTalks.ScoreTest do
       %Score{}
       |> Score.changeset(%{user_id: "deviceX", talk_id: talk.id, score: 2})
     assert {:error, changeset} = Repo.insert(score2)
-    assert changeset.errors[:talk_id_user_id] == {"has already been taken", []}
+    assert changeset.errors[:talk_id_user_id] == {"The user already scored this talk", []}
+  end
+
+  @tag :skip
+  test "changeset violates talk foreign key" do
+    changeset = Score.changeset(%Score{}, %{user_id: "deviceX", talk_id: 87, score: 1})
+    refute changeset.valid?
+    assert changeset.errors[:talk_id] == ["does not exist"]
   end
 end

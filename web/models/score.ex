@@ -17,7 +17,8 @@ defmodule PyconarTalks.Score do
     |> cast(params, [:user_id, :talk_id, :score])
     |> validate_required([:user_id, :talk_id, :score])
     |> validate_inclusion(:score, 1..5)
-    |> unique_constraint(:talk_id_user_id, name: "scores_user_id_talk_id_index")
+    |> foreign_key_constraint(:talk_id, [message: "The talk does not exist"])
+    |> unique_constraint(:talk_id_user_id, [name: "scores_user_id_talk_id_index", message: "The user already scored this talk"])
   end
 
   def group_talks_and_sum_scores(query) do
