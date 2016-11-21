@@ -39,6 +39,7 @@ defmodule PyconarTalks.Mixfile do
      {:gettext, "~> 0.11"},
      {:comeonin, "~> 2.6"},
      {:cowboy, "~> 1.0"},
+     {:cors_plug, "~> 1.1"},
      {:exrm, "~> 1.0"}]
   end
 
