@@ -19,7 +19,7 @@ defmodule PyconarTalks.Mixfile do
   def application do
     [mod: {PyconarTalks, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :cors_plug]]
   end
 
   # Specifies which paths to compile per environment.

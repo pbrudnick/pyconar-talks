@@ -17,14 +17,23 @@ defmodule PyconarTalks.ScoreController do
 
   def create(conn, %{"score" => score_params}) do
     changeset = Score.changeset(%Score{}, score_params)
-
-    case Repo.insert(changeset) do
-      {:ok, score} ->
-        conn
-        |> put_status(:created)
-        |> put_resp_header("location", score_path(conn, :show, score))
-        |> render("show.json", score: score)
-      {:error, changeset} ->
+    token = Phoenix.Token.sign(conn, "user", 2)
+    IO.puts Plug.Conn.get_req_header(conn, "authorization")
+    #case Phoenix.Token.verify(conn, "user", token) do
+    case Phoenix.Token.verify(conn, "user", Plug.Conn.get_req_header(conn, "authorization")) do
+      {:ok, user_id} ->
+        case Repo.insert(changeset) do
+          {:ok, score} ->
+            conn
+            |> put_status(:created)
+            |> put_resp_header("location", score_path(conn, :show, score))
+            |> render("show.json", score: score)
+          {:error, changeset} ->
+            conn
+            |> put_status(:unprocessable_entity)
+            |> render(PyconarTalks.ChangesetView, "error.json", changeset: changeset)
+        end
+      {:error, _} ->
         conn
         |> put_status(:unprocessable_entity)
         |> render(PyconarTalks.ChangesetView, "error.json", changeset: changeset)

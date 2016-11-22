@@ -7,7 +7,9 @@ defmodule PyconarTalks.ScoreControllerTest do
   @invalid_attrs %{}
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    {:ok, conn: put_req_header(conn, "accept", "application/json")
+          |> put_req_header("authorization", "SFMyNTY.g3QAAAACZAAEZGF0YWECZAAGc2lnbmVkbgYAOS84hFgB.XcoH23b8Kuz_b90HFHQqzw8HSfxyP7ZRK941ER5Dx5I
+.SFMyNTY.g3QAAAACZAAEZGF0YWECZAAGc2lnbmVkbgYATy84hFgB.2BsdX3s9RDyxx4jvIJbz9P_HlN9FDUAyiww65MBIu4U") }
   end
 
   test "lists all entries on index", %{conn: conn} do
