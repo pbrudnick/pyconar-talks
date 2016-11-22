@@ -38,7 +38,7 @@ defmodule PyconarTalks.Endpoint do
     key: "_pyconar_talks_key",
     signing_salt: "COF9clPL"
 
-  plug PyconarTalks.Router
-
   plug CORSPlug
+  
+  plug PyconarTalks.Router
 end
